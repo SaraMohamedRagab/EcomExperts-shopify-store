@@ -1,0 +1,890 @@
+<style>
+  #shopify-section-{{ section.id }} .cpg-section {
+    padding: 64px 32px 80px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .cpg-heading {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 36px;
+    color: #111;
+  }
+
+  #shopify-section-{{ section.id }} .cpg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .cpg-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: #eee;
+  }
+
+  #shopify-section-{{ section.id }} .cpg-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  #shopify-section-{{ section.id }} .cpg-item:hover img {
+    transform: scale(1.04);
+  }
+
+  #shopify-section-{{ section.id }} .cpg-plus {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, background 0.2s ease;
+  padding: 0;
+  }
+#shopify-section-{{ section.id }} .cpg-plus-1 {
+  top: 62%;
+  left: 50%;
+}
+
+#shopify-section-{{ section.id }} .cpg-plus-2 {
+  top: 65%;
+  left: 82%;
+}
+
+#shopify-section-{{ section.id }} .cpg-plus-3 {
+  top: 38%;
+  left: 65%;
+}
+
+#shopify-section-{{ section.id }} .cpg-plus-4 {
+  top: 28%;
+  left: 75%;
+}
+
+#shopify-section-{{ section.id }} .cpg-plus-5 {
+  top: 46%;
+  left: 48%;
+}
+
+#shopify-section-{{ section.id }} .cpg-plus-6 {
+  top: 55%;
+  left: 77%;
+}
+  #shopify-section-{{ section.id }} .cpg-plus:hover {
+    background: #fff;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  #shopify-section-{{ section.id }} .cpg-plus svg {
+    width: 11px;
+    height: 11px;
+    stroke: #000;
+    stroke-width: 1.8;
+    fill: none;
+  }
+
+  .cpg-overlay-{{ section.id }} {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    padding: 20px;
+  }
+
+  .cpg-overlay-{{ section.id }}.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .cpg-popup-{{ section.id }} {
+    background: #fff;
+    width: 100%;
+    max-width: 520px;
+    max-height: 92vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.22);
+    transform: translateY(8px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .cpg-overlay-{{ section.id }}.active .cpg-popup-{{ section.id }} {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #555;
+    line-height: 1;
+    padding: 6px;
+    z-index: 2;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-close:hover {
+    color: #000;
+    transform: rotate(90deg);
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    fill: none;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-top {
+    display: flex;
+    gap: 18px;
+    padding: 36px 28px 24px;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #f5f5f5;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-meta {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: #111;
+    line-height: 1.3;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-price {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 12px;
+    color: #111;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-desc {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #555;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-variants {
+    padding: 0 28px;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-opt-group {
+    margin-bottom: 18px;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-opt-label {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: #333;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-opt-btns {
+    display: flex;
+    border: 1px solid #d4d4d4;
+    background: #fff;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-opt-btn {
+    flex: 1;
+    padding: 14px 16px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    cursor: pointer;
+    color: #111;
+    border-bottom: 2.5px solid transparent;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    font-family: inherit;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-opt-btn + .cpg-opt-btn {
+    border-left: 1px solid #d4d4d4;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-opt-btn.selected {
+    border-bottom-color: #000;
+    font-weight: 600;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-opt-btn:hover:not(.selected) {
+    background: #fafafa;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-opt-select {
+    width: 100%;
+    padding: 14px 40px 14px 16px;
+    border: 1px solid #d4d4d4;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
+    color: #111;
+    font-family: inherit;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-opt-select:focus {
+    outline: 2px solid #000;
+    outline-offset: 1px;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-popup-footer {
+    padding: 16px 28px 28px;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-add-btn {
+    position: relative;
+    width: 100%;
+    padding: 18px;
+    background: #000;
+    color: #fff;
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    overflow: hidden;
+    font-family: inherit;
+    transition: color 0.3s ease;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-add-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #f5c518;
+    transform: translateX(-101%);
+    transition: transform 0.35s ease;
+    z-index: 0;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-add-btn > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-add-btn:hover:not(:disabled) {
+    color: #000;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-add-btn:hover:not(:disabled)::before {
+    transform: translateX(0);
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-add-btn:hover:not(:disabled) .cpg-arrow {
+    transform: translateX(6px);
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-add-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-arrow {
+    display: inline-flex;
+    transition: transform 0.3s ease;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-arrow svg {
+    width: 30px;
+    height: 10px;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    fill: none;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-status {
+    font-size: 13px;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 18px;
+  }
+
+  .cpg-popup-{{ section.id }} .cpg-status.success { color: #2a7a2a; }
+  .cpg-popup-{{ section.id }} .cpg-status.error   { color: #c00; }
+
+  @media (max-width: 600px) {
+    #shopify-section-{{ section.id }} .cpg-section {
+      padding: 40px 16px 60px;
+    }
+
+    #shopify-section-{{ section.id }} .cpg-grid {
+      gap: 2px;
+    }
+
+    #shopify-section-{{ section.id }} .cpg-plus {
+      width: 22px;
+      height: 22px;
+    }
+
+    #shopify-section-{{ section.id }} .cpg-plus svg {
+      width: 9px;
+      height: 9px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-popup-top {
+      flex-direction: column;
+      padding: 28px 16px 16px;
+      gap: 12px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-popup-img {
+      width: 100%;
+      height: 180px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-popup-title {
+      font-size: 15px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-popup-price {
+      font-size: 14px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-popup-desc {
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-popup-variants,
+    .cpg-popup-{{ section.id }} .cpg-popup-footer {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-opt-group {
+      margin-bottom: 12px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-opt-label {
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-opt-btn {
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-opt-select {
+      padding: 10px 36px 10px 12px;
+      font-size: 12px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-add-btn {
+      padding: 14px;
+      font-size: 11px;
+      gap: 12px;
+    }
+
+    .cpg-popup-{{ section.id }} .cpg-popup-footer {
+      padding-bottom: 20px;
+    }
+  }
+</style>
+
+<div class="cpg-section" data-section-id="{{ section.id }}">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="cpg-heading">{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+
+  <div class="cpg-grid">
+    {%- for i in (1..6) -%}
+      {%- assign product_key = 'product_' | append: i -%}
+      {%- assign prod = all_products[section.settings[product_key]] -%}
+      {%- if prod != blank -%}
+        <div class="cpg-item" data-product-id="{{ prod.id }}">
+          {%- if prod.featured_image -%}
+            <img
+              src="{{ prod.featured_image | image_url: width: 800 }}"
+              alt="{{ prod.title | escape }}"
+              loading="lazy"
+              width="800"
+              height="800"
+            >
+          {%- endif -%}
+          <button class="cpg-plus cpg-plus-{{ i }}" type="button" aria-label="Quick view {{ prod.title | escape }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <script type="application/json" class="cpg-product-data">
+            {
+              "id": {{ prod.id }},
+              "title": {{ prod.title | json }},
+              "price": {{ prod.price_min }},
+              "description": {{ prod.description | strip_html | truncate: 320 | json }},
+              "image": {{ prod.featured_image | image_url: width: 360 | json }},
+              "options": {{ prod.options | json }},
+              "variants": [
+                {%- for v in prod.variants -%}
+                  {
+                    "id": {{ v.id }},
+                    "title": {{ v.title | json }},
+                    "price": {{ v.price }},
+                    "available": {{ v.available }},
+                    "option1": {{ v.option1 | json }},
+                    "option2": {{ v.option2 | json }},
+                    "option3": {{ v.option3 | json }}
+                  }{% unless forloop.last %},{% endunless %}
+                {%- endfor -%}
+              ]
+            }
+          </script>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- assign bonus_prod = all_products[section.settings.bonus_product] -%}
+<script type="application/json" id="cpg-bonus-{{ section.id }}">
+  {%- if bonus_prod != blank -%}
+    {
+      "id": {{ bonus_prod.id }},
+      "title": {{ bonus_prod.title | json }},
+      "variants": [
+        {%- for v in bonus_prod.variants -%}
+          {
+            "id": {{ v.id }},
+            "available": {{ v.available }},
+            "option1": {{ v.option1 | json }},
+            "option2": {{ v.option2 | json }},
+            "option3": {{ v.option3 | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  {%- else -%}
+    null
+  {%- endif -%}
+</script>
+
+<div
+  class="cpg-overlay-{{ section.id }}"
+  id="cpg-overlay-{{ section.id }}"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Product quick view"
+>
+  <div class="cpg-popup-{{ section.id }}" id="cpg-popup-{{ section.id }}">
+    <button class="cpg-popup-close" type="button" aria-label="Close">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+      </svg>
+    </button>
+
+    <div class="cpg-popup-top">
+      <img class="cpg-popup-img" src="" alt="">
+      <div class="cpg-popup-meta">
+        <h3 class="cpg-popup-title"></h3>
+        <p class="cpg-popup-price"></p>
+        <p class="cpg-popup-desc"></p>
+      </div>
+    </div>
+
+    <div class="cpg-popup-variants"></div>
+
+    <div class="cpg-popup-footer">
+      <button class="cpg-add-btn" type="button" disabled>
+        <span class="cpg-add-label">ADD TO CART</span>
+        <span class="cpg-arrow" aria-hidden="true">
+          <svg viewBox="0 0 30 10">
+            <line x1="0" y1="5" x2="26" y2="5" stroke-linecap="round" />
+            <polyline points="22,1 27,5 22,9" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </button>
+      <p class="cpg-status" aria-live="polite"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var SID = {{ section.id | json }};
+  var overlay = document.getElementById('cpg-overlay-' + SID);
+  var popup   = document.getElementById('cpg-popup-' + SID);
+
+  if (!overlay || !popup) return;
+
+  var popupImg      = popup.querySelector('.cpg-popup-img');
+  var popupTitle    = popup.querySelector('.cpg-popup-title');
+  var popupPrice    = popup.querySelector('.cpg-popup-price');
+  var popupDesc     = popup.querySelector('.cpg-popup-desc');
+  var popupVariants = popup.querySelector('.cpg-popup-variants');
+  var addBtn        = popup.querySelector('.cpg-add-btn');
+  var addLabel      = popup.querySelector('.cpg-add-label');
+  var statusEl      = popup.querySelector('.cpg-status');
+
+  var productData = {};
+  document
+    .querySelectorAll('[data-section-id="' + SID + '"] .cpg-item')
+    .forEach(function (item) {
+      var script = item.querySelector('.cpg-product-data');
+      if (!script) return;
+      try {
+        var data = JSON.parse(script.textContent);
+        productData[data.id] = data;
+      } catch (_) {}
+    });
+
+  var bonusProduct = null;
+  try {
+    var bonusEl = document.getElementById('cpg-bonus-' + SID);
+    if (bonusEl) bonusProduct = JSON.parse(bonusEl.textContent);
+  } catch (_) {}
+
+  var currentProduct  = null;
+  var selectedOptions = {};
+
+  function formatMoney(cents) {
+    var currency = (window.Shopify && window.Shopify.currency && window.Shopify.currency.active) || 'USD';
+    try {
+      return new Intl.NumberFormat(document.documentElement.lang || 'en', {
+        style: 'currency',
+        currency: currency
+      }).format(cents / 100);
+    } catch (_) {
+      return (cents / 100).toFixed(2);
+    }
+  }
+
+  function isColorOption(name) {
+    return /colou?r/i.test(name);
+  }
+
+  function findVariant() {
+    if (!currentProduct) return null;
+    return currentProduct.variants.find(function (v) {
+      return currentProduct.options.every(function (opt, i) {
+        return v['option' + (i + 1)] === selectedOptions[opt];
+      });
+    }) || null;
+  }
+
+  function updateAddBtn() {
+    var variant = findVariant();
+    addBtn.disabled = !variant || !variant.available;
+    if (variant) popupPrice.textContent = formatMoney(variant.price);
+  }
+
+  function buildVariants(product) {
+    popupVariants.innerHTML = '';
+
+    if (product.options.length === 1 && product.options[0] === 'Title') return;
+
+    product.options.forEach(function (optName, idx) {
+      var seen   = {};
+      var values = product.variants
+        .map(function (v) { return v['option' + (idx + 1)]; })
+        .filter(function (v) {
+          if (!v || seen[v]) return false;
+          seen[v] = true;
+          return true;
+        });
+
+      var group = document.createElement('div');
+      group.className = 'cpg-opt-group';
+
+      var label = document.createElement('p');
+      label.className = 'cpg-opt-label';
+      label.textContent = optName;
+      group.appendChild(label);
+
+      if (isColorOption(optName)) {
+        var btnsWrap = document.createElement('div');
+        btnsWrap.className = 'cpg-opt-btns';
+
+        values.forEach(function (val) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'cpg-opt-btn' + (selectedOptions[optName] === val ? ' selected' : '');
+          btn.textContent = val;
+          btn.dataset.option = optName;
+          btn.dataset.value  = val;
+
+          btn.addEventListener('click', function () {
+            selectedOptions[optName] = val;
+            btnsWrap.querySelectorAll('.cpg-opt-btn').forEach(function (b) {
+              b.classList.toggle('selected', b.dataset.value === val);
+            });
+            updateAddBtn();
+          });
+
+          btnsWrap.appendChild(btn);
+        });
+
+        group.appendChild(btnsWrap);
+      } else {
+        var select = document.createElement('select');
+        select.className = 'cpg-opt-select';
+        select.dataset.option = optName;
+
+        var placeholder = document.createElement('option');
+        placeholder.value    = '';
+        placeholder.textContent = 'Choose your ' + optName.toLowerCase();
+        placeholder.disabled = true;
+        placeholder.selected = !selectedOptions[optName];
+        select.appendChild(placeholder);
+
+        values.forEach(function (val) {
+          var opt = document.createElement('option');
+          opt.value       = val;
+          opt.textContent = val;
+          opt.selected    = selectedOptions[optName] === val;
+          select.appendChild(opt);
+        });
+
+        select.addEventListener('change', function () {
+          selectedOptions[optName] = select.value;
+          updateAddBtn();
+        });
+
+        group.appendChild(select);
+      }
+
+      popupVariants.appendChild(group);
+    });
+  }
+
+  function openPopup(product) {
+    currentProduct  = product;
+    selectedOptions = {};
+    statusEl.textContent = '';
+    statusEl.className   = 'cpg-status';
+
+    // Pre-select the first variant's options
+    var first = product.variants[0];
+    if (first) {
+      product.options.forEach(function (opt, i) {
+        selectedOptions[opt] = first['option' + (i + 1)];
+      });
+    }
+
+    popupImg.src       = product.image || '';
+    popupImg.alt       = product.title;
+    popupTitle.textContent = product.title;
+    popupPrice.textContent = formatMoney(product.price);
+    popupDesc.textContent  = product.description;
+
+    buildVariants(product);
+    updateAddBtn();
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () { popup.querySelector('.cpg-popup-close').focus(); }, 50);
+  }
+
+  function closePopup() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    currentProduct = null;
+  }
+
+  function cartAdd(items) {
+    return fetch('/cart/add.js', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body:    JSON.stringify({ items: items })
+    }).then(function (res) {
+      if (!res.ok) {
+        return res.json().then(function (err) {
+          throw new Error(err.description || 'Could not add to cart');
+        });
+      }
+      return res.json();
+    });
+  }
+
+  function notifyCartUpdate() {
+    if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+      publish(PUB_SUB_EVENTS.cartUpdate, { source: 'custom-product-grid' });
+    }
+  }
+
+  function handleAddToCart() {
+    var variant = findVariant();
+    if (!variant) return;
+
+    addBtn.disabled    = true;
+    addLabel.textContent = 'ADDING\u2026';
+    statusEl.textContent = '';
+    statusEl.className   = 'cpg-status';
+
+    var optValues = Object.values(selectedOptions);
+    var addBonus  = bonusProduct
+      && optValues.indexOf('Black')  !== -1
+      && optValues.indexOf('Medium') !== -1;
+
+    cartAdd([{ id: variant.id, quantity: 1 }])
+      .then(function () {
+        if (!addBonus) return;
+        var bonusVariant = null;
+        for (var i = 0; i < bonusProduct.variants.length; i++) {
+          if (bonusProduct.variants[i].available) {
+            bonusVariant = bonusProduct.variants[i];
+            break;
+          }
+        }
+        if (!bonusVariant) bonusVariant = bonusProduct.variants[0];
+        if (!bonusVariant) return;
+
+        return cartAdd([{ id: bonusVariant.id, quantity: 1 }]).catch(function () {});
+      })
+      .then(function () {
+        statusEl.textContent = 'Added to cart!';
+        statusEl.className   = 'cpg-status success';
+        notifyCartUpdate();
+        setTimeout(closePopup, 1300);
+      })
+      .catch(function (err) {
+        statusEl.textContent = err.message || 'Could not add to cart.';
+        statusEl.className   = 'cpg-status error';
+      })
+      .finally(function () {
+        addLabel.textContent = 'ADD TO CART';
+        updateAddBtn();
+      });
+  }
+
+  document
+    .querySelectorAll('[data-section-id="' + SID + '"] .cpg-plus')
+    .forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var item   = btn.closest('.cpg-item');
+        var prodId = parseInt(item.dataset.productId, 10);
+        if (productData[prodId]) openPopup(productData[prodId]);
+      });
+    });
+
+  popup.querySelector('.cpg-popup-close').addEventListener('click', closePopup);
+
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closePopup();
+  });
+
+  addBtn.addEventListener('click', handleAddToCart);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) closePopup();
+  });
+}());
+</script>
+
+{% schema %}
+{
+  "name": "Custom Product Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Tisso vison in the wild"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Product 1"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Product 2"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "Product 3"
+    },
+    {
+      "type": "product",
+      "id": "product_4",
+      "label": "Product 4"
+    },
+    {
+      "type": "product",
+      "id": "product_5",
+      "label": "Product 5"
+    },
+    {
+      "type": "product",
+      "id": "product_6",
+      "label": "Product 6"
+    },
+    {
+      "type": "header",
+      "content": "Auto-Add Bonus Product"
+    },
+    {
+      "type": "paragraph",
+      "content": "Automatically added to cart when a product with both 'Black' and 'Medium' option values is purchased."
+    },
+    {
+      "type": "product",
+      "id": "bonus_product",
+      "label": "Bonus Product (e.g. Soft Winter Jacket)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Grid"
+    }
+  ]
+}
+{% endschema %}
