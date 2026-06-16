@@ -1,6 +1,6 @@
 # EcomExpert Store
 
-![Store Screenshot](assets/store-screenshot.png)
+![Store Screenshot](assets/ecom.png)
 
 A modern eCommerce store built on Shopify, designed to deliver a clean, fast, and enjoyable shopping experience across desktop and mobile.
 
